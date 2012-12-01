@@ -7,7 +7,9 @@ Bundler.require
 set :environment, ENV['RACK_ENV'] || ENV['env'] || :development
 
 # Requires the necessary files, in order, for the app
-Chassis.load_path 'settings', 'libraries', 'models', 'routes'
+['settings', 'libraries', 'models', 'routes'].each do |directory|
+	Dir["./#{directory}/**/*.rb"].each { |file| require file }
+end
 
 # Catches all routes and attempts to match them to a view file
 #   This must load AFTER all other routes
