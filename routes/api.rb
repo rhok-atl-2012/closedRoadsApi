@@ -27,5 +27,5 @@ end
 # multiple events
 
 get '/events/:start/:end/?' do
-	@events = Event.all(:start_date.gt => params[:start], :edn_date.lt => params[:end])
+	@events = Event.all(:start_date.gt => params[:start], :end_date.lt => params[:end])
 end
