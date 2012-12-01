@@ -3,5 +3,5 @@ class Street
 
 	property :id, Serial
 	
-	property :streets, String, required: true
+	property :street_ids, String, required: true
 end

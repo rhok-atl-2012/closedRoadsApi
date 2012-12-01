@@ -5,8 +5,8 @@ class Event
 	property   :deleted_at, ParanoidDateTime
 	
 	property :id, Serial
-	
-	property :name, String, required: true
+		
+	property :name, String, length: 100, required: true
 	property :start_date, DateTime, required: true
 	property :end_date, DateTime, required: true
 	
