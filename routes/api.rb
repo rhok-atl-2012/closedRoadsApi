@@ -4,3 +4,16 @@ get '/?' do
 	'Hello World'
 end
 
+post '/event/:id/?' do
+
+end
+
+put '/event/:id/?' do
+
+end
+
+delete '/event/:id/?' do 
+
+end
+
+
