@@ -7,7 +7,7 @@ class Event
 	property :id, Serial
 	
 	property :name, String, required: true
-	property :start_date, Datetime, required: true
-	property :end_date, Datetime, required: true
+	property :start_date, DateTime, required: true
+	property :end_date, DateTime, required: true
 	
 end
