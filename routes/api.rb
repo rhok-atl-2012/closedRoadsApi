@@ -9,9 +9,13 @@ get '/event/:id/?' do
 	@event = Event.get(params[:id])
 end
 
-post '/event/:id/?' do
-	event = Event.create(name: params[:name], start_date: params[:start_date], end_date: params[:end_date])
-	event.saved? ? 'Event succesfully created.' : 'Event creation failed.'
+get '/new/event/:name/:start_date/:end_date/:street_ids/?' do
+	arr = params[:street_ids].split("+")
+	streets = []
+	arr.each {|str| streets << str.to_f }
+	event = Event.create(name: params[:name], start_date: params[:start_date], end_date: params[:end_date], street_ids: streets)
+	event.saved? ? response = 'Event succesfully created.' : response = 'Event creation failed.'
+	return response
 end
 
 put '/event/:id/?' do
@@ -29,23 +33,3 @@ end
 get '/events/:start/:end/?' do
 	@events = Event.all(:start_date.gt => params[:start], :end_date.lt => params[:end])
 end
-
-get '/load/csv/?' do	
-	File.foreach("data/streets.csv", 'r') do |line|
-  		arr = []
-  		line_arr = line.split(",") 
-  		count = line_arr.count
-  		count = count - 1  		
-  		
-  		File.open('data/data.txt', 'w+') do |f1|  
-  			f1.write(line_arr)
-  		end
-  		
-  end
-end
-
-
-get '/test/?' do
-		Street.create(street_id: 830662386292 , geo_array: [-84.3671011, 33.7734538, -84.3670325, 33.773625, -84.367064, 33.775468] )
-end
-
