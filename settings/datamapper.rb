@@ -28,7 +28,7 @@ configure :production do
 	# DataMapper.setup :default, 'sqlite::memory:'
 
 	# SQLite
-	DataMapper.setup :default, "sqlite://#{Dir.pwd}/data/production.sqlite3"
+	#DataMapper.setup :default, "sqlite://#{Dir.pwd}/data/production.sqlite3"
 
 	# MySQL
 	# DataMapper.setup :default, 'mysql://username:password@host_url:3306/database_name'
@@ -37,6 +37,6 @@ configure :production do
 	# DataMapper.setup :default, 'postgres://username:password@host_url:5432/database_name'
 
 	# Heroku PostgreSQL
-	# DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+	  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://ltrbmcrgudjsly:9Ojgh7_YZJztWPdBCt6de68-Cr@ec2-54-243-188-54.compute-1.amazonaws.com:5482/d2qarlt6id0gvo')
 
 end

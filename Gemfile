@@ -11,8 +11,6 @@ gem 'chronic', '~> 0.6.7'
 #   Be sure to comment/uncomment the adapters you plan on using
 #   See also: ./settings/datamapper.rb
 gem 'data_mapper', '~> 1.2.0'
-# gem 'dm-sqlite-adapter', '~> 1.2.0'
-# gem 'dm-mysql-adapter', '~> 1.2.0'
 gem 'dm-postgres-adapter', '~> 1.2.0'
 
 # Used for parsing JSON to and from Ruby objects
