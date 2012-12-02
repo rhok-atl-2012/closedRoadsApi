@@ -50,8 +50,8 @@ get '/events/:start_date/:end_date/:center_long/:center_lat/:radius/?' do
 				end
 			end
 		end
-		unique = results.uniq{|x| x.name}
-		return unique.to_json
+		og = results.uniq!
+		return results.to_json
 end
 
 # testing
