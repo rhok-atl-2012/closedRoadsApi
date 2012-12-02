@@ -34,20 +34,22 @@ get '/events/:start_date/:end_date/:center_long/:center_lat/:radius/?' do
 		unless events.nil? || events.empty?
 			events.each do |e|
 				street_ids = e.street_ids
+				
 				street_ids.each do |street|
-					if street.street_id > 1015 && street.street_id < 3110
-						st = Street.first(street_id: street.to_i)
-						geos = st.geo_array
-						count = geos.count/2
-						i1 = 0
-						i2 = 1
+					this = street.to_i
+					st = Street.first(street_id: this.to_i)
+					#if st.street_id > 1015 && st.street_id < 3109
+					geos = st.geo_array
+					count = geos.count/2
+					i1 = 0
+					i2 = 1
 						count.times do 
 							within_radius = nearby( params[:center_lat], params[:center_long], params[:radius], geos[i2], geos[i1])
 							results << e if within_radius
 							i1 += 1
 							i2 += 1
 						end
-					end
+					#end
 				end
 			end
 			og = results.uniq!
