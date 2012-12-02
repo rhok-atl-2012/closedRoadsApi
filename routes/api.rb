@@ -31,27 +31,28 @@ end
 get '/events/:start_date/:end_date/:center_long/:center_lat/:radius/?' do
 		events = Event.all(:start_date.gt => params[:start_date], :end_date.lt => params[:end_date])
 		results =[]
-		events.each do |e|
-			street_ids = e.street_ids
-			puts e.id
-			puts street_ids
-			puts ''
-			street_ids.each do |street|
-				st = Street.first(street_id: street.to_i)
-				geos = st.geo_array
-				count = geos.count/2
-				i1 = 0
-				i2 = 1
-				count.times do 
-					within_radius = nearby( params[:center_lat], params[:center_long], params[:radius], geos[i2], geos[i1])
-					results << e if within_radius
-					i1 += 1
-					i2 += 1
+		unless events.nil? || events.empty?
+			events.each do |e|
+				street_ids = e.street_ids
+				street_ids.each do |street|
+					if street.street_id > 1015 && street.street_id < 3110
+						st = Street.first(street_id: street.to_i)
+						geos = st.geo_array
+						count = geos.count/2
+						i1 = 0
+						i2 = 1
+						count.times do 
+							within_radius = nearby( params[:center_lat], params[:center_long], params[:radius], geos[i2], geos[i1])
+							results << e if within_radius
+							i1 += 1
+							i2 += 1
+						end
+					end
 				end
 			end
+			og = results.uniq!
+			return results.to_json
 		end
-		og = results.uniq!
-		return results.to_json
 end
 
 # testing
