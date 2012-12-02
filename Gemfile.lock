@@ -114,6 +114,7 @@ DEPENDENCIES
   data_mapper (~> 1.2.0)
   dm-pg-types (~> 0.8.2)
   dm-postgres-adapter (~> 1.2.0)
+  dm-serializer
   json (~> 1.7.4)
   pony (~> 1.4)
   rack-flash3 (~> 1.0.1)

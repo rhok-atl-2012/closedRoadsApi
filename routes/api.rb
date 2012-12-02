@@ -6,7 +6,8 @@ end
 
 # Single event
 get '/event/:id/?' do
-	@event = Event.get(params[:id])
+	event = Event.get(params[:id])
+	return event.to_json
 end
 
 get '/new/event/:name/:start_date/:end_date/:street_ids/?' do
@@ -15,7 +16,7 @@ get '/new/event/:name/:start_date/:end_date/:street_ids/?' do
 	arr.each {|str| streets << str.to_f }
 	event = Event.create(name: params[:name], start_date: params[:start_date], end_date: params[:end_date], street_ids: streets)
 	event.saved? ? response = 'Event succesfully created.' : response = 'Event creation failed.'
-	return response
+	return response.to_json	
 end
 
 put '/event/:id/?' do
@@ -31,5 +32,6 @@ end
 # multiple events
 
 get '/events/:start/:end/?' do
-	@events = Event.all(:start_date.gt => params[:start], :end_date.lt => params[:end])
+	events = Event.all(:start_date.gt => params[:start], :end_date.lt => params[:end])
+	return events.to_json
 end

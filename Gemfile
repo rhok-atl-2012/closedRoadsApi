@@ -30,3 +30,5 @@ gem 'sinatra-contrib', '~> 1.3.1'
 
 # Postgres Data Types
 gem 'dm-pg-types', '~> 0.8.2'
+
+gem 'dm-serializer'
