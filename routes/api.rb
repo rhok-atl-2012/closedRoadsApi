@@ -1,13 +1,22 @@
-# Sample Sinatra route handler, see Sinatra docs for more info.
-
-get '/?' do
-	'Hello World'
-end
-
-# Single event
-get '/event/:id/?' do
-	event = Event.get(params[:id])
-	return event.to_json
+helpers do 
+	def nearby center_lat, center_long, radius, lat, long
+    unless center_lat.to_f == nil || center_long.to_f == nil
+      arr = Array.new                         
+      lat.to_f > center_lat.to_f ? lat_diff = lat.to_f - center_lat.to_f.to_f.to_f : lat_diff = center_lat.to_f.to_f - lat.to_f
+      long.to_f > center_long.to_f ? long_diff = long.to_f - center_long.to_f.to_f : long_diff = center_long.to_f.to_f - long.to_f
+      if lat_diff == 0 && long_diff == 0
+        dist_miles = 0
+      elsif lat_diff == 0 || long_diff == 0
+        dist_miles = (lat_diff + long_diff)*69.04799998422561 
+      else
+        dist_miles = Math.sqrt(lat_diff**2 + long_diff**2)*69.04799998422561
+      end
+      dist_miles < radius.to_f ? result = true : result = false
+    else
+      result = false
+    end
+    result
+  end
 end
 
 get '/new/event/:name/:start_date/:end_date/:street_ids/?' do
@@ -19,19 +28,40 @@ get '/new/event/:name/:start_date/:end_date/:street_ids/?' do
 	return response.to_json	
 end
 
-put '/event/:id/?' do
-	event = Event.update(name: params[:name], start_date: params[:start_date], end_date: params[:end_date])
-	event ? 'Event succesfully saved.' : 'Event update failed.'
+get '/events/:start_date/:end_date/:center_long/:center_lat/:radius/?' do
+		events = Event.all(:start_date.gt => params[:start_date], :end_date.lt => params[:end_date])
+		results =[]
+		events.each do |e|
+			street_ids = e.street_ids
+			puts e.id
+			puts street_ids
+			puts ''
+			street_ids.each do |street|
+				st = Street.first(street_id: street.to_i)
+				geos = st.geo_array
+				count = geos.count/2
+				i1 = 0
+				i2 = 1
+				count.times do 
+					within_radius = nearby( params[:center_lat], params[:center_long], params[:radius], geos[i2], geos[i1])
+					results << e if within_radius
+					i1 += 1
+					i2 += 1
+				end
+			end
+		end
+		unique = results.uniq{|x| x.name}
+		return unique.to_json
 end
 
-delete '/event/:id/?' do 
-	event = Event.destroy(params[:id])
-	event ? 'Event succesfully deleted.' : 'Event update deletion failed.'
+# testing
+
+get '/?' do
+	'Hello World'
 end
 
-# multiple events
-
-get '/events/:start/:end/?' do
-	events = Event.all(:start_date.gt => params[:start], :end_date.lt => params[:end])
-	return events.to_json
+# Single event
+get '/event/:id/?' do
+	event = Event.get(params[:id])
+	return event.to_json
 end
