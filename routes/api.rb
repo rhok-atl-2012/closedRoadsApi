@@ -29,3 +29,23 @@ end
 get '/events/:start/:end/?' do
 	@events = Event.all(:start_date.gt => params[:start], :end_date.lt => params[:end])
 end
+
+get '/load/csv/?' do	
+	File.foreach("data/streets.csv", 'r') do |line|
+  		arr = []
+  		line_arr = line.split(",") 
+  		count = line_arr.count
+  		count = count - 1  		
+  		
+  		File.open('data/data.txt', 'w+') do |f1|  
+  			f1.write(line_arr)
+  		end
+  		
+  end
+end
+
+
+get '/test/?' do
+		Street.create(street_id: 830662386292 , geo_array: [-84.3671011, 33.7734538, -84.3670325, 33.773625, -84.367064, 33.775468] )
+end
+

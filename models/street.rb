@@ -3,7 +3,8 @@ class Street
 
 	property :id, Serial
 
-	property :street_id, Integer, required: true	
-	property :geo_array, DecimalArray, required: true, precision: 10
+	property :street_id, Integer, required: true
+	# long, lat
+	property :geo_array, DecimalArray, required: true, scale: 10, precision: 13
 	
 end
