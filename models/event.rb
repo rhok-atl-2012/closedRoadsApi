@@ -9,6 +9,6 @@ class Event
 	property :name, String, length: 100, required: true
 	property :start_date, DateTime, required: true
 	property :end_date, DateTime, required: true
-	property :street_ids, DecimalArray, required: true
+	property :street_ids, DecimalArray, required: true, scale: 10, precision: 13
 	
 end
