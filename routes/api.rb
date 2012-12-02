@@ -20,16 +20,17 @@ helpers do
 end
 
 get '/new/event/:name/:start_date/:end_date/:street_ids/?' do 
+	response.headers['Content-Type'] = 'text/javascript; charset=utf-8'
 	arr = params[:street_ids].split("+")
 	streets = []
 	arr.each {|str| streets << str.to_f }
 	event = Event.create(name: params[:name], start_date: params[:start_date], end_date: params[:end_date], street_ids: streets)
 	event.saved? ? response = 'Event succesfully created.' : response = 'Event creation failed.'
-	[200, 'Content-Type' => "text/javascript;charset=utf-8"]
 	return response.to_json	
 end
 
 get '/events/:start_date/:end_date/:center_long/:center_lat/:radius/?' do
+		response.headers['Content-Type'] = 'text/javascript; charset=utf-8'
 		events = Event.all(:start_date.gt => params[:start_date], :end_date.lt => params[:end_date])
 		results =[]
 		unless events.nil? || events.empty?
@@ -54,7 +55,6 @@ get '/events/:start_date/:end_date/:center_long/:center_lat/:radius/?' do
 				end
 			end
 			og = results.uniq!
-			[200, 'Content-Type' => "text/javascript;charset=utf-8"]
 			return results.to_json
 		end
 end
