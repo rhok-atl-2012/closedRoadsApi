@@ -1,9 +1,7 @@
-chassis
-=======
+Closed Roads API
+================
 
-Chassis is a Ruby gem that generates a boilerplate Rack app for quickly starting projects.
+### About
++ Closed Roads is a simple API for creating and finding closed roads in the Atlanta area
++ Closed Roads API was built as part of [closedroads.ofatl.com](http://closedroads.ofatl.com) and will be live soon.
 
-### TODO:
-
-- Explain load order and how to run on a server
-- Explain where to find everything
